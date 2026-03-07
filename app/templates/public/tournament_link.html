@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h1>Оплата турнира</h1>
+  <p><strong>{{ link.tournament.title if link.tournament else 'Tournament' }}</strong></p>
+  <p>{{ link.tournament.description if link.tournament else '' }}</p>
+  <p>Сумма участия: <strong>{{ link.fixed_amount }}</strong></p>
+  <a class="btn" href="{{ url_for('payment') }}">Оплатить участие</a>
+</div>
+{% endblock %}

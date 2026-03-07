@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Реквизиты</h1>
+{% for a in accounts %}
+<form class="card" method="post" action="{{ url_for('admin_requisites_update', account_id=a.id) }}">
+  <h3>{{ a.payment_method.name }}</h3>
+  <label>Название <input name="title" value="{{ a.title }}"></label>
+  <label>Инструкция <textarea name="instruction">{{ a.instruction or '' }}</textarea></label>
+  <label>Реквизиты <textarea name="requisites">{{ a.requisites or '' }}</textarea></label>
+  <label>Комментарий <textarea name="comment">{{ a.comment or '' }}</textarea></label>
+  <label><input type="checkbox" name="is_active" {% if a.is_active %}checked{% endif %}> Активно</label>
+  <button>Сохранить</button>
+</form>
+{% endfor %}
+{% for a in crypto %}
+<form class="card" method="post" action="{{ url_for('admin_crypto_update', account_id=a.id) }}">
+  <h3>Крипта {{ a.exchange }}</h3>
+  <label>ID <input name="account_id" value="{{ a.account_id }}"></label>
+  <label>Инструкция <textarea name="instruction">{{ a.instruction or '' }}</textarea></label>
+  <label>Комментарий <textarea name="comment">{{ a.comment or '' }}</textarea></label>
+  <label><input type="checkbox" name="is_active" {% if a.is_active %}checked{% endif %}> Активно</label>
+  <button>Сохранить</button>
+</form>
+{% endfor %}
+{% endblock %}
