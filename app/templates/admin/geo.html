@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Страны, города, корты</h1>
+<div class="grid cols3">
+  <form class="card" method="post" action="{{ url_for('add_country') }}">
+    <h3>Добавить страну</h3><input name="name" required><button>Добавить</button>
+    <ul>{% for x in countries %}<li>{{ x.name }}</li>{% endfor %}</ul>
+  </form>
+  <form class="card" method="post" action="{{ url_for('add_city') }}">
+    <h3>Добавить город</h3>
+    <input name="name" required>
+    <select name="country_id">{% for x in countries %}<option value="{{x.id}}">{{x.name}}</option>{% endfor %}</select>
+    <button>Добавить</button>
+    <ul>{% for x in cities %}<li>{{ x.name }}</li>{% endfor %}</ul>
+  </form>
+  <form class="card" method="post" action="{{ url_for('add_court') }}">
+    <h3>Добавить корт</h3>
+    <input name="name" required>
+    <input name="address" placeholder="Адрес">
+    <select name="city_id">{% for x in cities %}<option value="{{x.id}}">{{x.name}}</option>{% endfor %}</select>
+    <button>Добавить</button>
+    <ul>{% for x in courts %}<li>{{ x.name }}</li>{% endfor %}</ul>
+  </form>
+</div>
+{% endblock %}

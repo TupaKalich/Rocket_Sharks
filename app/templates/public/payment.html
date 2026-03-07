@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Оплата</h1>
+<div class="card">
+  <p>Сумма: <strong>{{ draft.amount }}</strong></p>
+  <form method="post" action="{{ url_for('payment_select') }}">
+    <label>Способ оплаты
+      <select name="payment_method_id" id="method" required onchange="document.getElementById('crypto-block').style.display = this.options[this.selectedIndex].text.includes('Крипта') ? 'block':'none'">
+        <option value="">Выберите способ</option>
+        {% for m in methods %}
+        <option value="{{ m.id }}">{{ m.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <div id="crypto-block" style="display:none">
+      <label>Биржа (обязательно для крипты)
+        <select name="crypto_exchange">
+          <option value="">Выберите биржу</option>
+          <option value="Bybit">Bybit</option>
+          <option value="HTX">HTX</option>
+        </select>
+      </label>
+    </div>
+    <button>Показать реквизиты</button>
+  </form>
+</div>
+{% endblock %}

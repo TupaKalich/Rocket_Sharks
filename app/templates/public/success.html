@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h1>Заявка отправлена</h1>
+  <p>Заявка #{{ booking.id }} передана оператору на ручную проверку.</p>
+  <p>Статус: <strong>{{ booking.status }}</strong></p>
+  <a href="/">Создать новую заявку</a>
+</div>
+{% endblock %}

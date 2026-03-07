@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h1>Оплата по персональной ссылке</h1>
+  <p>Параметры игры уже зафиксированы.</p>
+  <ul>
+    <li>Страна: {{ link.country.name if link.country else '-' }}</li>
+    <li>Город: {{ link.city.name if link.city else '-' }}</li>
+    <li>Корт: {{ link.court.name if link.court else '-' }}</li>
+    <li>Дата: {{ link.play_date }}</li>
+    <li>Время: {{ link.time_slot.label if link.time_slot else '-' }}</li>
+    <li>Сумма: {{ link.fixed_amount }}</li>
+  </ul>
+  <a class="btn" href="{{ url_for('payment') }}">Перейти к оплате</a>
+</div>
+{% endblock %}
