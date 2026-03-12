@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Заявки</h1>
+<table class="card table">
+  <tr><th>ID</th><th>Тип</th><th>Сумма</th><th>Метод</th><th>Статус</th><th>Чек</th><th></th></tr>
+  {% for b in bookings %}
+  <tr>
+    <td>{{ b.id }}</td>
+    <td>{{ b.booking_type }}</td>
+    <td>{{ b.amount }}</td>
+    <td>{{ b.payment_method.name }}</td>
+    <td>{{ b.status }}</td>
+    <td>{% if proof_map.get(b.id) %}да{% else %}нет{% endif %}</td>
+    <td><a href="{{ url_for('admin_booking_card', booking_id=b.id) }}">Открыть</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

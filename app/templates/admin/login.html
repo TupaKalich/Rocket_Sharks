@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Вход в админ-панель</h1>
+<form class="card" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Email <input name="email" type="email" required></label>
+  <label>Password <input name="password" type="password" required></label>
+  <button>Войти</button>
+</form>
+{% endblock %}

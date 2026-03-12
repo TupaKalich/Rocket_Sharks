@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Персональные и турнирные ссылки</h1>
+<form method="post" class="card grid">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Тип
+    <select name="link_type">{% for lt in link_types %}<option value="{{ lt }}">{{ lt }}</option>{% endfor %}</select>
+  </label>
+  <label>Сумма <input name="fixed_amount" type="number" step="0.01" required></label>
+  <label>Страна <select name="country_id"><option value="">-</option>{% for x in countries %}<option value="{{x.id}}">{{x.name}}</option>{% endfor %}</select></label>
+  <label>Город <select name="city_id"><option value="">-</option>{% for x in cities %}<option value="{{x.id}}">{{x.name}}</option>{% endfor %}</select></label>
+  <label>Корт <select name="court_id"><option value="">-</option>{% for x in courts %}<option value="{{x.id}}">{{x.name}}</option>{% endfor %}</select></label>
+  <label>Дата <input type="date" name="play_date"></label>
+  <label>Слот <select name="time_slot_id"><option value="">-</option>{% for x in slots %}<option value="{{x.id}}">{{x.label}}</option>{% endfor %}</select></label>
+  <label>Турнир <select name="tournament_id"><option value="">-</option>{% for t in tournaments %}<option value="{{t.id}}">{{t.title}}</option>{% endfor %}</select></label>
+  <label>Срок (дней) <input name="expires_days" type="number" value="7"></label>
+  <button>Создать ссылку</button>
+</form>
+<table class="card table">
+  <tr><th>ID</th><th>Тип</th><th>Сумма</th><th>Активна</th><th>URL</th></tr>
+  {% for l in links %}
+  <tr><td>{{ l.id }}</td><td>{{ l.link_type }}</td><td>{{ l.fixed_amount }}</td><td>{{ l.is_active }}</td><td><a target="_blank" href="{{ url_for('payment_by_link', token=l.token) }}">/l/{{ l.token }}</a></td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

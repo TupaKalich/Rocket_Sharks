@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Загрузка чека</h1>
+<div class="card">
+  <p>Сумма: <strong>{{ draft.amount }}</strong></p>
+  <p>Метод: <strong>{{ method.name }}</strong></p>
+  {% if method.code == 'crypto' %}
+    <p>Биржа: <strong>{{ account.exchange }}</strong></p>
+    <p>ID: {{ account.account_id }}</p>
+    <p>{{ account.instruction }}</p>
+    <p>{{ account.comment }}</p>
+  {% else %}
+    <p>{{ account.title }}</p>
+    <pre>{{ account.requisites }}</pre>
+    <p>{{ account.instruction }}</p>
+  {% endif %}
+  <form method="post" enctype="multipart/form-data" action="{{ url_for('create_booking_from_proof') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input type="hidden" name="form_token" value="{{ form_token }}">
+    <label>Чек (JPG/PNG/PDF)
+      <input type="file" name="payment_proof" accept=".jpg,.jpeg,.png,.pdf" required>
+    </label>
+    <button>Я оплатил и загрузил чек</button>
+  </form>
+</div>
+{% endblock %}

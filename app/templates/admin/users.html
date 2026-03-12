@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Пользователи / операторы</h1>
+<form class="card" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input name="email" type="email" placeholder="email" required>
+  <input name="password" type="password" placeholder="password" required>
+  <select name="role"><option value="operator">operator</option><option value="admin">admin</option></select>
+  <label><input type="checkbox" name="can_edit_requisites"> Может редактировать реквизиты</label>
+  <button>Создать</button>
+</form>
+<table class="card table"><tr><th>Email</th><th>Роль</th><th>Активен</th><th>Может реквизиты</th></tr>
+{% for u in users %}<tr><td>{{ u.email }}</td><td>{{ u.role.code }}</td><td>{{ u.is_active }}</td><td>{{ u.can_edit_requisites }}</td></tr>{% endfor %}
+</table>
+{% endblock %}

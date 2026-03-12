@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Заявка #{{ booking.id }}</h1>
+<div class="card">
+  <p>Тип: {{ booking.booking_type }}</p>
+  <p>Создана: {{ booking.created_at }}</p>
+  <p>Локация: {{ booking.country.name if booking.country }} / {{ booking.city.name if booking.city }} / {{ booking.court.name if booking.court }}</p>
+  <p>Дата и время: {{ booking.play_date }} {{ booking.time_slot.label if booking.time_slot }}</p>
+  <p>Сумма: {{ booking.amount }}</p>
+  <p>Метод: {{ booking.payment_method.name }}{% if booking.crypto_exchange %} ({{ booking.crypto_exchange }}){% endif %}</p>
+  <p>Статус: {{ booking.status }}</p>
+  {% if proof %}
+    <p><a target="_blank" href="{{ url_for('admin_proof_download', proof_id=proof.id) }}">Открыть чек</a></p>
+  {% endif %}
+</div>
+<form class="card" method="post" action="{{ url_for('admin_booking_status', booking_id=booking.id) }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Новый статус
+    <select name="status">
+      {% for s in booking_statuses %}
+      <option {% if booking.status==s %}selected{% endif %} value="{{ s }}">{{ s }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Комментарий
+    <textarea name="operator_comment">{{ booking.operator_comment or '' }}</textarea>
+  </label>
+  <button>Сохранить</button>
+</form>
+{% endblock %}

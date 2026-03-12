@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Дашборд</h1>
+<div class="grid cols4">
+  <div class="card">Новые: {{ counts.new }}</div>
+  <div class="card">Ожидают: {{ counts.pending }}</div>
+  <div class="card">Подтв.: {{ counts.confirmed }}</div>
+  <div class="card">Отклонены: {{ counts.rejected }}</div>
+</div>
+<div class="card navlist">
+  <a href="{{ url_for('admin_bookings') }}">Заявки</a>
+  <a href="{{ url_for('admin_requisites') }}">Реквизиты</a>
+  <a href="{{ url_for('admin_links') }}">Персональные и турнирные ссылки</a>
+  {% if current_user.is_admin %}
+  <a href="{{ url_for('admin_geo') }}">Страны/города/корты</a>
+  <a href="{{ url_for('admin_prices') }}">Цены</a>
+  <a href="{{ url_for('admin_users') }}">Операторы</a>
+  {% endif %}
+</div>
+{% endblock %}
